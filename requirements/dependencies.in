@@ -1,3 +1,5 @@
 ipython
 falcon
 gunicorn
+msgpack-python
+pytest
