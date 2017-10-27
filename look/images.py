@@ -7,6 +7,16 @@ import mimetypes
 import falcon
 import msgpack
 
+ALLOWED_IMAGE_TYPES = (
+    'image/gif',
+    'image/jpeg',
+    'image/png',
+)
+
+def validate_image_type(req, resp, resource, params):
+    if req.content_type not in ALLOWED_IMAGE_TYPES:
+        msg = 'Image type not allowed. Must be PNG, JPEG, or GIF'
+        raise falcon.HTTPBadRequest('Bad request', msg)
 
 class Collection(object):
 
@@ -28,6 +38,7 @@ class Collection(object):
         resp.content_type = falcon.MEDIA_MSGPACK
         resp.status = falcon.HTTP_200
 
+    @falcon.before(validate_image_type)
     def on_post(self, req, resp):
         name = self._image_store.save(req.stream, req.content_type)
         resp.status = falcon.HTTP_201
