@@ -47,6 +47,8 @@
   gunicorn --reload look.app
   gunicorn 'look.app:get_app()'
   gunicorn --reload 'look.app:get_app()'
+
+  gunicorn --reload 'thing.app:get_app()'
 ```
 
 ## Testing
@@ -57,10 +59,18 @@
   pytest tests -k test_posted_image_gets_saved
 ```
 
-### Use http
+### Testing with Using http
+
+#### look
 
 ```
   http localhost:8000/images/voltron.png
   http localhost:8000/images/db79e518-c8d3-4a87-93fe-38b620f9d410.png
   http POST localhost:8000/images Content-Type:image/png < test.png
+```
+
+#### thing
+
+```
+  http localhost:8000/1/things authorization:custom-token
 ```
