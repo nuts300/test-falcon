@@ -65,3 +65,26 @@ def test_post_image(client, mock_store):
     # tuple of positional arguments supplied when calling the mock.
     assert isinstance(saver_call[0][0], falcon.request_helpers.BoundedStream)
     assert saver_call[0][1] == image_content_type
+
+def test_saving_image(monkeypatch):
+    # This still has some mocks, but they are more localized and do not
+    # have to be monkey-patched into standard library modules (always a
+    # risky business).
+    mock_file_open = mock_open()
+
+    fake_uuid = '123e4567-e89b-12d3-a456-426655440000'
+    def mock_uuidgen():
+        return fake_uuid
+
+    fake_image_bytes = b'fake-image-bytes'
+    fake_request_stream = io.BytesIO(fake_image_bytes)
+    storage_path = 'fake-storage-path'
+    store = look.images.ImageStore(
+        storage_path,
+        uuidgen=mock_uuidgen,
+        fopen=mock_file_open
+    )
+
+    assert store.save(fake_request_stream, 'image/png') == fake_uuid + '.png'
+    assert call().write(fake_image_bytes) in mock_file_open.mock_calls
+    
