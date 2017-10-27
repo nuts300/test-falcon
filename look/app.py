@@ -11,7 +11,8 @@ def create_app(image_store):
 
 
 def get_app():
-    image_store = ImageStore('./images/')
+    storage_path = os.environ.get('LOOK_STORAGE_PATH', './images/')
+    image_store = ImageStore(storage_path)
     return create_app(image_store)
 
 # api = application = falcon.API()
