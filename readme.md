@@ -52,3 +52,11 @@
   pytest tests -k test_saving_image
   pytest tests -k test_posted_image_gets_saved
 ```
+
+### Use http
+
+```
+  http localhost:8000/images/voltron.png
+  http localhost:8000/images/db79e518-c8d3-4a87-93fe-38b620f9d410.png
+  http POST localhost:8000/images Content-Type:image/png < test.png
+```
