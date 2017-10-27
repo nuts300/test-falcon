@@ -2,4 +2,5 @@ requirements/dependencies.txt
 __pycache__
 .cache
 images/*
-!images/.gitkeep
+tmp/*
+!.gitkeep

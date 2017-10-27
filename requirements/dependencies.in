@@ -3,3 +3,4 @@ falcon
 gunicorn
 msgpack-python
 pytest
+requests
