@@ -42,6 +42,7 @@
 ```
   gunicorn --reload look.app
   gunicorn 'look.app:get_app()'
+  gunicorn --reload 'look.app:get_app()'
 ```
 
 ## Testing

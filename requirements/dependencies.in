@@ -4,3 +4,4 @@ gunicorn
 msgpack-python
 pytest
 requests
+httpie
