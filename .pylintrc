@@ -1,0 +1,12 @@
+{
+    "editor.rulers": [120],
+    "python.linting.pylintArgs": [
+        "--max-line-length=120"
+    ],
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "window.zoomLevel": 1,
+    "files.trimTrailingWhitespace": true,
+    "python.autoComplete.extraPaths": [
+    ]
+}

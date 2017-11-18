@@ -33,13 +33,9 @@
 
 ## Install dependencies
 
-### Make dependencies.txt
-
-  pip-compile requirements/dependencies.in
-
 ### Install dependencies
 
-  pip-sync requirements/*.txt
+  pip -r requirements.txt -c constraints.txt
 
 ## Start server
 
@@ -49,6 +45,8 @@
   gunicorn --reload 'look.app:get_app()'
 
   gunicorn --reload 'thing.app:get_app()'
+  
+  gunicorn --reload 'sample.app:get_app()'
 ```
 
 ## Testing
