@@ -9,10 +9,11 @@ class User(object):
         user = UserDocument.objects(id=ObjectId(id))
         resp.body = user.to_json()
 
-class UserList(object):
+class Users(object):
     def on_get(self, req, resp):
         users = UserDocument.objects.all()
         resp.body = users.to_json()
+
     def on_post(self, req, resp):
         data = json.loads(req.stream.read().decode('utf-8'))
         user = UserDocument(**data)
