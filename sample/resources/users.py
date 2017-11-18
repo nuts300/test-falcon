@@ -1,7 +1,6 @@
 import falcon
 import json
 from bson.objectid import ObjectId
-from bson import json_util
 from sample.documents.user import UserDocument
 
 class User(object):
