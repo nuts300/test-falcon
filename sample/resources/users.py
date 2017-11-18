@@ -1,19 +1,20 @@
+import falcon
 import json
 from bson.objectid import ObjectId
 from bson import json_util
-from sample.models.user import User
+from sample.documents.user import UserDocument
 
-class Users(object):
+class User(object):
+    def on_get(self, req, resp, id):
+        user = UserDocument.objects(id=ObjectId(id))
+        resp.body = user.to_json()
 
+class UserList(object):
     def on_get(self, req, resp):
-        users = User.objects.all()
-        resp.body = json_util.dumps(users)
-
-    # def on_get(self, req, resp, id):
-    #     user = json.find({"_id": ObjectId(id)})
-    #     resp.body = json_util(user)
-    
+        users = UserDocument.objects.all()
+        resp.body = users.to_json()
     def on_post(self, req, resp):
-        data = req.body 
-        user = User(data)
+        data = json.loads(req.stream.read().decode('utf-8'))
+        user = UserDocument(**data)
         user.save()
+        resp.body = user.to_json()
