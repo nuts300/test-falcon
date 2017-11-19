@@ -11,9 +11,9 @@ class UsersOperator(object):
             user.save()
             return user.to_json()
         except ValidationError as err:
-            raise SampleError(status=falcon.HTTP_400, code=ErrorCode.INVALID_USER.name, message=ErrorCode.INVALID_USER.value, exception=err, vars=userPayload)
+            raise SampleError(status=falcon.HTTP_400, code=ErrorCode.INVALID_USER, exception=err, vars=userPayload)
         except Exception as err:
-            raise SampleError(status=falcon.HTTP_500, code=ErrorCode.FAILED_CREATE_USER.name, message=ErrorCode.FAILED_CREATE_USER.value, exception=err, vars=userPayload)
+            raise SampleError(status=falcon.HTTP_500, code=ErrorCode.FAILED_CREATE_USER, exception=err, vars=userPayload)
         
     def getUser(id):
         user = UserDocument.objects(id=ObjectId(id))
