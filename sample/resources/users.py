@@ -1,20 +1,19 @@
 import falcon
 import json
 from bson.objectid import ObjectId
-from sample.documents.user import UserDocument
+from sample.db_operators.users import UsersOperator
 
 class User(object):
     def on_get(self, req, resp, id):
-        user = UserDocument.objects(id=ObjectId(id))
-        resp.body = user.to_json()
+        result = UsersOperator.getUser(id)
+        resp.body = result
 
 class Users(object):
     def on_get(self, req, resp):
-        users = UserDocument.objects.all()
-        resp.body = users.to_json()
+        result = UsersOperator.getUsers()
+        resp.body = result
 
     def on_post(self, req, resp):
-        data = json.loads(req.stream.read().decode('utf-8'))
-        user = UserDocument(**data)
-        user.save()
-        resp.body = user.to_json()
+        user = json.loads(req.stream.read().decode('utf-8'))
+        result = UsersOperator.createUser(user)
+        resp.body = result
