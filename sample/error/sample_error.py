@@ -2,9 +2,9 @@ import logging
 import falcon
 import traceback
 
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.handlers.logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+from sample.logger import getLogger
+
+logger = getLogger(__name__)
 
 class SampleError(Exception):
     def __init__(self, exception, status, code, message):

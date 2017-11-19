@@ -1,7 +1,5 @@
-import logging
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.handlers.logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+from sample.logger import getLogger
+logger = getLogger(__name__)
 
 class PrintLogMiddleware(object):
     def process_request(self, req, resp):
