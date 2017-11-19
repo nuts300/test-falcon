@@ -49,4 +49,4 @@ class PrintLogMiddleware(object):
                 the framework processed and routed the request;
                 otherwise False.
         """
-        logger.info("[host]%s Reponse status %s " % (resp.status))
+        logger.info("[host]%s Reponse status %s " % (req.host, resp.status))

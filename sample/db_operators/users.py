@@ -8,7 +8,7 @@ class UsersOperator(object):
             user.save()
             return user.to_json()
         except Exception as err:
-            raise SampleError(status=400, code="TEST_CODE", message="test message", exception=err)
+            raise SampleError(status="400", code="TEST_CODE", message="test message", exception=err)
         
     def getUser(id):
         user = UserDocument.objects(id=ObjectId(id))
