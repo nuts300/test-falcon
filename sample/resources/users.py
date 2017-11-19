@@ -1,7 +1,7 @@
 import falcon
-import json
 from bson.objectid import ObjectId
 from sample.db_operators.users import UsersOperator
+from sample.extentions.parse_json import parseJson
 
 class User(object):
     def on_get(self, req, resp, id):
@@ -13,7 +13,8 @@ class Users(object):
         result = UsersOperator.getUsers()
         resp.body = result
 
+    @falcon.before(parseJson)
     def on_post(self, req, resp):
-        user = json.loads(req.stream.read().decode('utf-8'))
+        user = req.body
         result = UsersOperator.createUser(user)
         resp.body = result
