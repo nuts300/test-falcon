@@ -19,7 +19,7 @@ class Users(object):
 
     @falcon.before(parseJson)
     def on_post(self, req, resp):
-        user = req.body
+        user = req.context.get("body")
         try:
             result = DbOperator.createUser(user)
         except ValidationError as err:

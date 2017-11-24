@@ -6,6 +6,6 @@ from sample.error.code import ErrorCode
 def parseJson(req, resp, resource, params):
     try:
         body = req.stream.read().decode('utf-8')
-        req.body = json.loads(body)
+        req.context = { "body": json.loads(body) }
     except Exception as err:
         raise SampleError(status=falcon.HTTP_400, code=ErrorCode.INVALID_JSON, exception=err, vars={ "body": body })
