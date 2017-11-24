@@ -35,7 +35,7 @@
 
 ### Install dependencies
 
-  pip -r requirements.txt -c constraints.txt
+  pip install -r requirements.txt -c constraints.txt
 
 ## Start server
 
