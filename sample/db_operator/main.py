@@ -4,17 +4,17 @@ from sample.db_operator.documents.user import UserDocument
 
 class DbOperator(object):
     @staticmethod
-    def createUser(userPayload):
-        user = UserDocument(**userPayload)
+    def create_user(user_payload):
+        user = UserDocument(**user_payload)
         user.save()
-        return user.to_json()
-    
-    @staticmethod
-    def getUser(id):
-        user = UserDocument.objects(id=ObjectId(id))
         return user.to_json()
 
     @staticmethod
-    def getUsers():
-        users =UserDocument.objects.all()
+    def get_user(user_id):
+        user = UserDocument.objects(id=ObjectId(user_id)) # pylint: disable=E1101
+        return user.to_json()
+
+    @staticmethod
+    def get_users():
+        users = UserDocument.objects.all() # pylint: disable=E1101
         return users.to_json()

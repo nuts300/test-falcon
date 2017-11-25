@@ -1,5 +1,5 @@
-import falcon
 from enum import Enum, unique
+import falcon
 
 @unique
 class ErrorCode(Enum):
@@ -11,7 +11,6 @@ class ErrorCode(Enum):
     FAILED_READ_USERS = ("Failed read users", falcon.HTTP_500)
     UNEXPECTED_ERROR = ("Unexpected error", falcon.HTTP_500)
 
-    def __init__(self, message, status):
+    def __init__(self, message: str, status: str):
         self.message = message
         self.status = status
-

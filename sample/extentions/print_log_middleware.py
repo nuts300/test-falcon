@@ -1,5 +1,5 @@
-from sample.logger import getLogger
-logger = getLogger(__name__)
+from sample.logger import get_logger
+logger = get_logger(__name__)
 
 class PrintLogMiddleware(object):
     def process_request(self, req, resp):
@@ -11,7 +11,11 @@ class PrintLogMiddleware(object):
             resp: Response object that will be routed to
                 the on_* responder.
         """
-        logger.info("[host]%s Request %s [url]%s %s" % (req.host, req.method, req.path, req.query_string))
+        host = req.host
+        method = req.method
+        path = req.path
+        query = req.query_string
+        logger.info("[host]%s Request %s [url]%s %s" % (host, method, path, query))
 
 
     def process_resource(self, req, resp, resource, params):
