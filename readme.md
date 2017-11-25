@@ -72,3 +72,9 @@
 ```
   http localhost:8000/1/things authorization:custom-token
 ```
+
+### sample
+
+```
+  python -m unittest sample_tests/*.py
+```
