@@ -1,6 +1,7 @@
 from mongoengine.document import Document
 from mongoengine import fields
 
-class UserDocument(Document):
+class Users(Document):
     name = fields.StringField()
     age = fields.IntField()
+    meta = {'collection': 'users'}
