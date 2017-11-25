@@ -12,16 +12,19 @@ class FinalErrorHandler(object):
     @staticmethod
     def handle(ex, req, resp, params):
         if isinstance(ex, SampleError):
-            code = ex.code.name
-            message = ex.code.value
+            code = ex.error_code.name
+            message = ex.error_code.message
+            status = ex.error_code.status
             traceback_message = traceback.format_exc()
             logger.error("[code] %s [message] %s %s\n%s" % (code, message, ex.vars, traceback_message))
-            raise falcon.HTTPError(ex.status, code=code, title=message, description=traceback_message)
+            raise falcon.HTTPError(status, code=code, title=message, description=traceback_message)
         elif isinstance(ex, falcon.HTTPError):
             code = ex.code
             message = ex.title
-            traceback_message = ex.description = traceback.format_exc()
+            traceback_message = traceback.format_exc()
             logger.error("[code] %s [message] %s\n%s" % (code, message, traceback_message))
+            if not ex.description:
+                ex.description = traceback_message
             raise ex
         else:
             code = ErrorCode.UNEXPECTED_ERROR.name

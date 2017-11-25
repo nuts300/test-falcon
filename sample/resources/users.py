@@ -24,8 +24,7 @@ class Users(object):
         try:
             result = DbOperator.createUser(user)
         except ValidationError as err:
-            raise SampleError(status=falcon.HTTP_400, code=ErrorCode.INVALID_USER, vars=user)
-            # raise falcon.HTTPBadRequest(code=ErrorCode.INVALID_USER.name, title=ErrorCode.INVALID_USER.value)
+            raise SampleError(error_code=ErrorCode.INVALID_USER, vars=user)
         except Exception as err:
-            raise SampleError(status=falcon.HTTP_500, code=ErrorCode.FAILED_CREATE_USER, exception=err, vars=user)
+            raise SampleError(error_code=ErrorCode.FAILED_CREATE_USER, vars=user)
         resp.body = result

@@ -8,9 +8,8 @@ from sample.error.code import ErrorCode
 logger = getLogger(__name__)
 
 class SampleError(Exception):
-    def __init__(self, status, code:ErrorCode, vars):
-        self.status = status
-        self.code = code
+    def __init__(self, error_code:ErrorCode, vars):
+        self.error_code = error_code
         self.vars = vars
 
     
