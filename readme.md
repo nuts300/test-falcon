@@ -90,5 +90,5 @@
 ## Check type
 
 ```
-  mypy -s sample
+  watch -n 0.5 mypy -s sample
 ```
