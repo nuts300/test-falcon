@@ -2,7 +2,6 @@ ipython
 falcon
 gunicorn
 msgpack-python
-pytest
 requests
 httpie
 mongoengine

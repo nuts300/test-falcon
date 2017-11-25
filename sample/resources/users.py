@@ -9,7 +9,7 @@ from sample.error.sample_error import SampleError
 from sample.error.code import ErrorCode
 
 class User(object):
-    def on_get(self, req, resp, user_id):
+    def on_get(self, req, resp, user_id: str):
         result = DbOperator.get_user(user_id)
         if result:
             resp.body = result
@@ -17,7 +17,7 @@ class User(object):
             raise SampleError(error_code=ErrorCode.NOT_FOUND_USER, extra_vars={'user_id': user_id})
 
     @falcon.before(parse_json)
-    def on_put(self, req, resp, user_id):
+    def on_put(self, req, resp, user_id: str) -> None:
         user = req.context.get("body")
         try:
             result = DbOperator.update_user(user_id, user)
@@ -34,7 +34,7 @@ class User(object):
                 error_code=ErrorCode.FAILED_UPDATE_USER, extra_vars=(user, {'user_id': user_id}))
         resp.status = falcon.HTTP_204
 
-    def on_delete(self, req, resp, user_id):
+    def on_delete(self, req, resp, user_id: str) -> None:
         try:
             result = DbOperator.delete_user(user_id)
             if result < 1:
@@ -51,12 +51,12 @@ class User(object):
         resp.status = falcon.HTTP_204
 
 class Users(object):
-    def on_get(self, req, resp):
+    def on_get(self, req, resp) -> None:
         result = DbOperator.get_users()
         resp.body = result
 
     @falcon.before(parse_json)
-    def on_post(self, req, resp):
+    def on_post(self, req, resp) -> None:
         user = req.context.get("body")
         try:
             result = DbOperator.create_user(user)

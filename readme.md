@@ -37,6 +37,9 @@
 
   pip install -r requirements.txt -c constraints.txt
 
+### Install dependencies dev
+  pip install -r requirements.txt -r requirements_dev.txt -c constraints.txt
+
 ## Start server
 
 ```
@@ -45,8 +48,13 @@
   gunicorn --reload 'look.app:get_app()'
 
   gunicorn --reload 'thing.app:get_app()'
-  
-  gunicorn --reload 'sample.app:get_app()'
+```
+
+### sample
+
+```
+  ./start_db.sh
+  ./start_app.sh
 ```
 
 ## Testing
@@ -77,4 +85,10 @@
 
 ```
   python -m unittest sample_tests/*.py
+```
+
+## Check type
+
+```
+  mypy -s sample
 ```

@@ -8,7 +8,7 @@ from sample.error.sample_error import SampleError
 LOGGER = get_logger(__name__)
 
 
-def final_error_handler(ex, req, resp, params):
+def final_error_handler(ex, req, resp, params) -> None:
     if isinstance(ex, SampleError):
         code = ex.error_code.name
         message = ex.error_code.message

@@ -14,6 +14,6 @@ class ErrorCode(Enum):
     FAILED_DELETE_USER = ("Failed delete user", falcon.HTTP_500)
     UNEXPECTED_ERROR = ("Unexpected error", falcon.HTTP_500)
 
-    def __init__(self, message: str, status: str):
+    def __init__(self, message: str, status: str) -> None:
         self.message = message
         self.status = status
