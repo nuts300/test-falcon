@@ -1,5 +1,5 @@
 from sample.logger import get_logger
-logger = get_logger(__name__)
+LOGGER = get_logger(__name__)
 
 class PrintLogMiddleware(object):
     def process_request(self, req, resp):
@@ -15,7 +15,7 @@ class PrintLogMiddleware(object):
         method = req.method
         path = req.path
         query = req.query_string
-        logger.info("[host]%s Request %s [url]%s %s" % (host, method, path, query))
+        LOGGER.info("[host]%s Request %s [url]%s %s", host, method, path, query)
 
 
     def process_resource(self, req, resp, resource, params):
@@ -51,4 +51,4 @@ class PrintLogMiddleware(object):
                 the framework processed and routed the request;
                 otherwise False.
         """
-        logger.info("[host]%s Reponse status %s " % (req.host, resp.status))
+        LOGGER.info("[host]%s Reponse status %s ", req.host, resp.status)
