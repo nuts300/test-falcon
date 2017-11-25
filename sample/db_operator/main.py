@@ -11,8 +11,10 @@ class DbOperator(object):
 
     @staticmethod
     def get_user(user_id):
-        user = Users.objects(id=ObjectId(user_id)) # pylint: disable=E1101
-        return user.to_json()
+        user = Users.objects(id=ObjectId(user_id)).first() # pylint: disable=E1101
+        if user:
+            return user.to_json()
+        return None
 
     @staticmethod
     def get_users():

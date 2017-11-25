@@ -11,7 +11,10 @@ from sample.error.code import ErrorCode
 class User(object):
     def on_get(self, req, resp, user_id):
         result = DbOperator.get_user(user_id)
-        resp.body = result
+        if result:
+            resp.body = result
+        else:
+            raise SampleError(error_code=ErrorCode.NOT_FOUND_USER, extra_vars={'user_id': user_id})
 
 class Users(object):
     def on_get(self, req, resp):
