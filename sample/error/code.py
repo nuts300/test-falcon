@@ -8,3 +8,4 @@ class ErrorCode(Enum):
     FAILED_CREATE_USER = "Failed create user"
     FAILED_READ_USER = "Failed read user"
     FAILED_READ_USERS = "Failed read users"
+    UNEXPECTED_ERROR = "Unexpected error"
