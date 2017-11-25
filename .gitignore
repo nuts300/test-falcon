@@ -5,3 +5,5 @@ tmp/*
 data/*
 !data/.gitkeep
 .plython-version
+.mypy*
+.vscode
