@@ -1,5 +1,4 @@
 import falcon
-from bson.objectid import ObjectId
 from sample.db_operator.schemas.users import Users
 
 class DbOperator(object):
@@ -11,7 +10,7 @@ class DbOperator(object):
 
     @staticmethod
     def get_user(user_id):
-        user = Users.objects(id=ObjectId(user_id)).first() # pylint: disable=E1101
+        user = Users.objects(id=user_id).first() # pylint: disable=E1101
         if user:
             return user.to_json()
         return None
@@ -20,3 +19,8 @@ class DbOperator(object):
     def get_users():
         users = Users.objects.all() # pylint: disable=E1101
         return users.to_json()
+
+    @staticmethod
+    def update_user(user_id, user_payload):
+        result = Users.objects(id=user_id).update_one(**user_payload) # pylint: disable=E1101
+        return result

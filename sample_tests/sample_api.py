@@ -40,4 +40,3 @@ class TestMyApp(MyTestCase):
         self.assertTrue(len(response.json) > 0)
         finded = [user for user in response.json if user.get("_id").get("$oid") == TestMyApp._created_user_id]
         self.assertTrue(len(finded) == 1)
-
