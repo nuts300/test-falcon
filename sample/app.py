@@ -14,7 +14,6 @@ connect('mongotest', host='127.0.0.1', port=3001)
 def create_app():
     api = falcon.API(middleware=[PrintLogMiddleware()])
     api.add_error_handler(Exception, FinalErrorHandler.handle)
-    api.add_error_handler(SampleError, SampleError.handle)
     api.add_route('/hello', Hello())
     api.add_route('/users/{id}', User())
     api.add_route('/users', Users())

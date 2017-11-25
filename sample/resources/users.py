@@ -1,3 +1,4 @@
+import sys
 import falcon
 from bson.objectid import ObjectId
 from sample.extentions.parse_json import parseJson
@@ -24,6 +25,7 @@ class Users(object):
             result = DbOperator.createUser(user)
         except ValidationError as err:
             raise SampleError(status=falcon.HTTP_400, code=ErrorCode.INVALID_USER, exception=err, vars=user)
+            # raise falcon.HTTPBadRequest(code=ErrorCode.INVALID_USER.name, title=ErrorCode.INVALID_USER.value)
         except Exception as err:
             raise SampleError(status=falcon.HTTP_500, code=ErrorCode.FAILED_CREATE_USER, exception=err, vars=user)
         resp.body = result
