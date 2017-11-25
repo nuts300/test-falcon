@@ -13,7 +13,7 @@ class MyTestCase(testing.TestCase):
         self.app = get_app()
 
 
-# pylint: disable=W0212,W0201
+# pylint: disable=W0212,W0201,C0301
 class TestMyApp(MyTestCase):
 
     def test_hello(self):
@@ -27,20 +27,17 @@ class TestMyApp(MyTestCase):
             body=body,
             headers={'content-type': 'application/json'}
         )
-        content = json.loads(response._content)
-        created_user_id = content.get("_id").get("$oid")
+        TestMyApp._created_user_id = response.json.get("_id").get("$oid")
         self.assertEqual(response._status_code, 200)
 
-        print('/users/' + created_user_id)
-        get_resp = self.simulate_get('/users/' + created_user_id)
-        self.assertEqual(get_resp._status_code, 200)
-        print(get_resp.json)
-        self.assertEqual(get_resp.json.get("_id").get("$oid"), created_user_id)
+    def test_get_user(self):
+        response = self.simulate_get('/users/' + TestMyApp._created_user_id)
+        self.assertEqual(response._status_code, 200)
+        self.assertEqual(response.json.get("_id").get("$oid"), TestMyApp._created_user_id)
 
-    # def test_get_user(self):
-    #     response = self.simulate_get('/users/' + self._created_user_id)
-    #     print(response._content)
+    def test_get_users(self):
+        response = self.simulate_get('/users')
+        self.assertTrue(len(response.json) > 0)
+        finded = [user for user in response.json if user.get("_id").get("$oid") == TestMyApp._created_user_id]
+        self.assertTrue(len(finded) == 1)
 
-    # def test_get_users(self):
-    #     result = self.simulate_get('/users')
-    #     print(vars(result))
