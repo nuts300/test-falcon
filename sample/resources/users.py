@@ -23,20 +23,32 @@ class User(object):
             result = DbOperator.update_user(user_id, user)
             if result < 1:
                 raise SampleError(
-                    error_code=ErrorCode.NOT_FOUND_USER,
-                    extra_vars=(user, {'user_id': user_id}))
+                    error_code=ErrorCode.NOT_FOUND_USER, extra_vars=(user, {'user_id': user_id}))
         except SampleError as error:
             raise error
         except (ValidationError, OperationError):
             raise SampleError(
-                error_code=ErrorCode.INVALID_USER,
-                extra_vars=(user, {'user_id': user_id}))
+                error_code=ErrorCode.INVALID_USER, extra_vars=(user, {'user_id': user_id}))
         except Exception:
             raise SampleError(
-                error_code=ErrorCode.FAILED_UPDATE_USER,
-                extra_vars=(user, {'user_id': user_id}))
+                error_code=ErrorCode.FAILED_UPDATE_USER, extra_vars=(user, {'user_id': user_id}))
         resp.status = falcon.HTTP_204
 
+    def on_delete(self, req, resp, user_id):
+        try:
+            result = DbOperator.delete_user(user_id)
+            if result < 1:
+                raise SampleError(
+                    error_code=ErrorCode.NOT_FOUND_USER, extra_vars=({'user_id': user_id}))
+        except SampleError as error:
+            raise error
+        except (ValidationError, OperationError):
+            raise SampleError(
+                error_code=ErrorCode.INVALID_ID, extra_vars=({'user_id': user_id}))
+        except Exception:
+            raise SampleError(
+                error_code=ErrorCode.FAILED_DELETE_USER, extra_vars=({'user_id': user_id}))
+        resp.status = falcon.HTTP_204
 
 class Users(object):
     def on_get(self, req, resp):

@@ -15,8 +15,7 @@ def final_error_handler(ex, req, resp, params):
         status = ex.error_code.status
         traceback_message = traceback.format_exc()
         LOGGER.error(
-            "[code] %s [message] %s %s\n%s",
-            code, message, ex.extra_vars, traceback_message)
+            "[code] %s [message] %s %s\n%s", code, message, ex.extra_vars, traceback_message)
         raise falcon.HTTPError(status, code=code, title=message, description=traceback_message)
     elif isinstance(ex, falcon.HTTPError):
         code = ex.code
@@ -32,5 +31,4 @@ def final_error_handler(ex, req, resp, params):
         traceback_message = traceback.format_exc()
         LOGGER.error("[code] %s [message] %s\n%s", code, message, traceback_message)
         raise falcon.HTTPError(
-            falcon.HTTP_500,
-            code=code, title=message, description=traceback_message)
+            falcon.HTTP_500, code=code, title=message, description=traceback_message)

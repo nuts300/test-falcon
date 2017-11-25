@@ -24,3 +24,8 @@ class DbOperator(object):
     def update_user(user_id, user_payload):
         result = Users.objects(id=user_id).update_one(**user_payload) # pylint: disable=E1101
         return result
+
+    @staticmethod
+    def delete_user(user_id):
+        result = Users.objects(id=user_id).delete() # pylint: disable=E1101
+        return result
