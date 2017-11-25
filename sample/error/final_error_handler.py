@@ -10,7 +10,6 @@ LOGGER = get_logger(__name__)
 
 IS_PRODUCTION: bool = is_production()
 
-# pylint: disable=W0125
 def final_error_handler(ex, req, resp, params) -> None:
     if isinstance(ex, SampleError):
         code = ex.error_code.name
