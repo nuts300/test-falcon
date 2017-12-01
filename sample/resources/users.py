@@ -5,10 +5,12 @@ from bson.objectid import ObjectId
 from mongoengine.errors import ValidationError, OperationError
 
 from sample.extentions.parse_json import parse_json
+from sample.extentions.check_auth import check_auth
 from sample.db_operator.main import DbOperator
 from sample.error.sample_error import SampleError
 from sample.error.code import ErrorCode
 
+@falcon.before(check_auth)
 class User(object):
     def on_get(self, req, resp, user_id: str) -> None:
         user = DbOperator.get_user(user_id)

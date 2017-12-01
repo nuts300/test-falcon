@@ -1,6 +1,10 @@
-from typing import Optional, List, Any
+from typing import Optional, List, Any, Dict
+import bcrypt
 import falcon
 from sample.db_operator.schemas.users import Users
+from sample.db_operator.schemas.applications import Applications
+
+SALT = b'sample'
 
 def normalize_mongo_id(byson_obj: dict) -> dict:
     byson_obj["id"] = str(byson_obj["_id"])
@@ -43,3 +47,41 @@ class DbOperator(object):
     def delete_user(user_id: str) -> bool:
         deleted = Users.objects(id=user_id).delete()
         return deleted > 0
+
+    @staticmethod
+    def register_application(application_id: str, password: str, admin: bool) -> None:
+        hash_password = bcrypt.hashpw(password, SALT)
+        application = Applications(application_id=application_id, password=hash_password, admin=admin)
+        application.save()
+        return application.to_mongo()
+
+    @staticmethod
+    def get_applications() -> List[Dict]:
+        applications = Applications.objects.all()
+        mongo_obj_array = [application.to_mongo() for application in applications]
+        return mongo_obj_array
+
+    @staticmethod
+    def get_application(application_id: str) -> Optional[Dict]:
+        application = Applications.objects(application_id=application_id).first()
+        return application.to_mongo()
+    
+    @staticmethod
+    def update_application(application_id: str, application_payload: dict) -> Optional[Dict]:
+        Applications.objects(application_id=application_id).update_one(**application_payload)
+        application = Users.objects(application_id=application_id)
+        if (application):
+            return application.to_mongo()
+        return None
+
+    @staticmethod
+    def delete_application(application_id: str) -> bool:
+        deleted = Applications.objects(application_id=application_id).delete()
+        return deleted > 0
+
+    @staticmethod
+    def login_application(application_id: str, password: str) -> Optional[Dict]:
+        application = Applications.objects(application_id=application_id).first()
+        if application and bcrypt.checkpw(password, application.password)
+            return application.to_mongo()
+        return None

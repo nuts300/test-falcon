@@ -3,6 +3,7 @@ import falcon
 
 @unique
 class ErrorCode(Enum):
+    UNAUTHORIZED = ("Unauthorized", falcon.HTTP_401)
     INVALID_JSON = ("Invalid json", falcon.HTTP_500)
     INVALID_ID = ("Invalid id", falcon.HTTP_400)
     INVALID_USER = ("Invalid user", falcon.HTTP_400)

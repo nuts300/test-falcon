@@ -5,3 +5,5 @@ msgpack-python
 requests
 httpie
 mongoengine
+bcrypt
+PyJWT
