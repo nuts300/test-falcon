@@ -21,7 +21,11 @@ class Login(object):
         password = application.get('password')
         application = DbOperator.login_application(application_id=application_id, password=password)
         if application:
-            encoded = jwt.encode({'application_id': application['application_id'], 'admin': application['admin']}, SECRET, algorithm='HS256')
+            application_info = {
+                'application_id': application['application_id'],
+                'admin': application['admin']}
+            encoded = jwt.encode(application_info, SECRET, algorithm='HS256')
             resp.body = dumps({'token': encoded.decode('UTF-8')})
         else:
-            raise SampleError(error_code=ErrorCode.UNAUTHORIZED, extra_vars={'application_id': application_id})
+            raise SampleError(
+                error_code=ErrorCode.UNAUTHORIZED, extra_vars={'application_id': application_id})

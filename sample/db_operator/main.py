@@ -47,11 +47,12 @@ class DbOperator(object):
         return deleted > 0
 
     @staticmethod
-    def register_application(application_id: str, password: str, admin: bool) -> None:
+    def register_application(application_id: str, password: str, admin: bool) -> dict:
         password_bytes = password.encode('UTF-8')
         salt = bcrypt.gensalt(rounds=10, prefix=b'2a')
         hash_password = bcrypt.hashpw(password_bytes, salt)
-        application = Applications(application_id=application_id, password=hash_password, admin=admin)
+        application = Applications(
+            application_id=application_id, password=hash_password, admin=admin)
         application.save()
         return application.to_mongo()
 
@@ -65,12 +66,12 @@ class DbOperator(object):
     def get_application(application_id: str) -> Optional[Dict]:
         application = Applications.objects(application_id=application_id).first()
         return application.to_mongo()
-    
+
     @staticmethod
     def update_application(application_id: str, application_payload: dict) -> Optional[Dict]:
         Applications.objects(application_id=application_id).update_one(**application_payload)
         application = Users.objects(application_id=application_id)
-        if (application):
+        if application:
             return application.to_mongo()
         return None
 
@@ -82,6 +83,7 @@ class DbOperator(object):
     @staticmethod
     def login_application(application_id: str, password: str) -> Optional[Dict]:
         application = Applications.objects(application_id=application_id).first()
-        if application and bcrypt.checkpw(password.encode('UTF-8'), application['password'].encode('UTF-8')):
+        check = bcrypt.checkpw(password.encode('UTF-8'), application['password'].encode('UTF-8'))
+        if application and check:
             return application.to_mongo()
         return None

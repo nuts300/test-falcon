@@ -14,6 +14,9 @@ class ErrorCode(Enum):
     FAILED_UPDATE_USER = ("Failed update user", falcon.HTTP_500)
     FAILED_DELETE_USER = ("Failed delete user", falcon.HTTP_500)
     UNEXPECTED_ERROR = ("Unexpected error", falcon.HTTP_500)
+    APPLICATION_ID_DEPLICATED = ("Application id is deplicated", falcon.HTTP_500)
+    INVALID_APPLICATION = ("Invalid application", falcon.HTTP_400)
+    FAILED_CREATE_APPLICATION = ("Failed create application", falcon.HTTP_500)
 
     def __init__(self, message: str, status: str) -> None:
         self.message = message
