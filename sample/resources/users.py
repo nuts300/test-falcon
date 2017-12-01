@@ -56,6 +56,7 @@ class User(object):
             raise SampleError(
                 error_code=ErrorCode.FAILED_DELETE_USER, extra_vars=({'user_id': user_id}))
 
+@falcon.before(check_auth)
 class Users(object):
     def on_get(self, req, resp) -> None:
         users = DbOperator.get_users()

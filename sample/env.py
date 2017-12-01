@@ -1,7 +1,7 @@
 import os
 
 DEFAULT_DB_HOST = "mongodb://localhost"
-DEFAULT_DB_PORT = 27017
+DEFAULT_DB_PORT = 27000
 
 # pylint: disable=W0703
 def is_production() -> bool:
