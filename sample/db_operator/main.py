@@ -82,6 +82,6 @@ class DbOperator(object):
     @staticmethod
     def login_application(application_id: str, password: str) -> Optional[Dict]:
         application = Applications.objects(application_id=application_id).first()
-        if application and bcrypt.checkpw(password, application.password)
+        if application and bcrypt.checkpw(password, application.password):
             return application.to_mongo()
         return None
