@@ -4,8 +4,6 @@ import falcon
 from sample.db_operator.schemas.users import Users
 from sample.db_operator.schemas.applications import Applications
 
-SALT = b'sample'
-
 def normalize_mongo_id(byson_obj: dict) -> dict:
     byson_obj["id"] = str(byson_obj["_id"])
     del byson_obj["_id"]
@@ -50,7 +48,9 @@ class DbOperator(object):
 
     @staticmethod
     def register_application(application_id: str, password: str, admin: bool) -> None:
-        hash_password = bcrypt.hashpw(password, SALT)
+        password_bytes = password.encode('UTF-8')
+        salt = bcrypt.gensalt(rounds=10, prefix=b'2a')
+        hash_password = bcrypt.hashpw(password_bytes, salt)
         application = Applications(application_id=application_id, password=hash_password, admin=admin)
         application.save()
         return application.to_mongo()
@@ -82,6 +82,6 @@ class DbOperator(object):
     @staticmethod
     def login_application(application_id: str, password: str) -> Optional[Dict]:
         application = Applications.objects(application_id=application_id).first()
-        if application and bcrypt.checkpw(password, application.password):
+        if application and bcrypt.checkpw(password.encode('UTF-8'), application['password'].encode('UTF-8')):
             return application.to_mongo()
         return None

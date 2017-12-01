@@ -10,7 +10,7 @@ from sample.db_operator.main import DbOperator
 from sample.error.sample_error import SampleError
 from sample.error.code import ErrorCode
 
-SECRET = 'SUPER_SECRET'
+SECRET = b'SUPER_SECRET'
 
 class Login(object):
 
@@ -21,5 +21,7 @@ class Login(object):
         password = application.get('password')
         application = DbOperator.login_application(application_id=application_id, password=password)
         if application:
-            encoded = jwt.encode({'application_id': application.application_id, 'admin': application.admin}, SECRET, algorithm='HS256')
+            encoded = jwt.encode({'application_id': application['application_id'], 'admin': application['admin']}, SECRET, algorithm='HS256')
             resp.body = dumps({'token': encoded})
+        else:
+            raise SampleError(error_code=ErrorCode.UNAUTHORIZED, extra_vars={'token': token})
