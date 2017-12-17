@@ -1,3 +1,3 @@
 #!/bin/sh
 # For development
-gunicorn --reload 'sample.app:get_app()'
+gunicorn -b :8001 --reload 'sample.app:get_app()'
